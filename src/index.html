@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SOCIAL NETWORK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+</head>
+<body>
+    <h1 id="container"></h1>
+    <script>
+            //Initialize Firebase
+            
+            var container =document.getElementById("container");
+            var dbRef=firebase.database().ref().child('text');
+            dbRef.on('value', snap => container.innerText = snap.val());
+            </script>
+
+
+<input id="inputLogin" type="text">
+
+<input id="password" type="text">
+<button id="buttonEnter">Ingresar</button>
+<button id="signIn">Registrar</button>
+<button id="logOut">Salir</button>
+</body>
+<script src="main.js"></script>
+<script src="app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+</html>
