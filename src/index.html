@@ -5,29 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SOCIAL NETWORK</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
 </head>
 <body>
     <h1 id="container"></h1>
-
-    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyBJLg0QwQM_UVohFzRN37UFDKrX5U85lek",
-        authDomain: "labredsocial.firebaseapp.com",
-        databaseURL: "https://labredsocial.firebaseio.com",
-        projectId: "labredsocial",
-        storageBucket: "labredsocial.appspot.com",
-        messagingSenderId: "735549578294"
-      };
-      firebase.initializeApp(config);
-            var container =document.getElementById("container");
-            var dbRef=firebase.database().ref().child('text');
-            dbRef.on('value', snap => container.innerText = snap.val());
-            </script>
-
 
 <input id="inputLogin" type="text">
 
@@ -35,8 +18,6 @@
 <button id="buttonEnter">Ingresar</button>
 <button id="signIn">Registrar</button>
 <button id="logOut">Salir</button>
-</body>
-<script src="main.js"></script>
 <script src="app.js"></script>
-
+</body>
 </html>

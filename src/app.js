@@ -3,16 +3,15 @@
         apiKey: "AIzaSyBJLg0QwQM_UVohFzRN37UFDKrX5U85lek",
         authDomain: "labredsocial.firebaseapp.com",
         databaseURL: "https://labredsocial.firebaseio.com",
-        projectId: "labredsocial",
         storageBucket: "labredsocial.appspot.com",
-        messagingSenderId: "735549578294"
       };
       firebase.initializeApp(config);
+
       const txtemail=document.getElementById("inputLogin");
-      const txtpassword=document.getElementById("inputPassword");
-      const buttonLogIn=document.getElementById("buttonLogIn");
-      const buttonSignIn=document.getElementById("buttonSignIn");
-      const buttonLogOut=document.getElementById("buttonLogOut");
+      const txtpassword=document.getElementById("password");
+      const buttonLogIn=document.getElementById("buttonEnter");
+      const buttonSignIn=document.getElementById("signIn");
+      const buttonLogOut=document.getElementById("logOut");
 
       buttonLogIn.addEventListener('click', e=>{
           const email = txtemail.value;
@@ -46,4 +45,4 @@
           }
       })
 
-})
+}());
