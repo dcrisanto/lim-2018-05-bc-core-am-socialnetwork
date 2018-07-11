@@ -18,8 +18,8 @@ const config = {
     projectId: "login-e3b98",
     storageBucket: "login-e3b98.appspot.com",
     messagingSenderId: "857338189328"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
 const clearContent = (elements) => {
     elements.forEach(element => {
@@ -34,6 +34,19 @@ const clearElement = (element) => {
     element.innerHTML = '';
 }
 
+//Enviar un mensaje de verificación al usuario
+const checkEmail = () => {
+    const user = firebase.auth().currentUser;
+
+    user.sendEmailVerification().then(() => {
+        console.log('enviando el correo')
+        // Email sent.
+    }).catch((error) => {
+        // An error happened.
+        console.log(eror);
+    });
+}
+
 //Registrar nuevo usuario con correo y contraseña
 btnSignUp.addEventListener('click', registrar => {
     //Obtener email y pass
@@ -41,7 +54,10 @@ btnSignUp.addEventListener('click', registrar => {
     let registrationPassword = inputPasswordRecord.value;
 
     firebase.auth().createUserWithEmailAndPassword(registrationMail, registrationPassword)
-        .catch((error) => {
+    .then(() =>{
+      checkEmail();
+    })
+    .catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -66,37 +82,42 @@ btnLogin.addEventListener('click', logear => {
             // ...
             containerText.innerHTML = 'No se encuentra registrado: ' + errorMessage;
         });
-        containerText.innerHTML = 'Bienvenid@ a esta red social';
-        clearContent([inputMailAccess, inputPasswordAccess]);
+    //containerText.innerHTML = 'Bienvenid@ a esta red social';
+    clearContent([inputMailAccess, inputPasswordAccess]);
 });
 
 //Cerrar sesión
-btnSignOff.addEventListener('click', signOff =>{
+btnSignOff.addEventListener('click', signOff => {
     firebase.auth().signOut()
-    .then(()=>{
-     console.log('Cerrando sesión de red social');
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
+        .then(() => {
+            console.log('Cerrando sesión de red social');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 });
 
-const showResult = () => {
-    btnSignOff.classList.remove('hidden');
-    status.innerHTML = `
-    <p>Usuario se encuentra activo</p>
-    `
+const showResult = (user) => {
+    if (user.emailVerified){
+        btnSignOff.classList.remove('hidden');
+        status.innerHTML = `
+        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
+        `
+    }
+    
 }
 
 //Estado de autenticación
 const observer = () => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            showResult();
+            showResult(user);
             // User is signed in.
+            console.log(user);
             let displayName = user.displayName;
             let email = user.email;
             let emailVerified = user.emailVerified;
+            console.log(emailVerified);
             let photoURL = user.photoURL;
             let isAnonymous = user.isAnonymous;
             let uid = user.uid;
