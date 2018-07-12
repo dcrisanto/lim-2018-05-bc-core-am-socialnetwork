@@ -1,9 +1,9 @@
-/* #login{
+#signIn{
     display:block;
 }
-#signIn{
+#signUp{
     display:none;
-} */
+}
 #backgroundImage{
     position: fixed;
     left: 0;
@@ -32,10 +32,13 @@
     margin-left: 20px;
     margin-right: 20px;
   border-radius: 5px;
-  background-color: #f2f2f2;
   padding: 20px 0 30px 0;
 } 
-
+h1,
+p{
+  font-family: 'Yellowtail', cursive;
+  color:#f1f1f1;
+}
 /* style inputs and link buttons */
 input,
 .btn {
@@ -99,14 +102,6 @@ input[type=submit]:hover {
   clear: both;
 }
 
-/* vertical line */
-.vl {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  border: 2px solid #ddd;
-  height: 175px;
-}
 
 /* text inside the vertical line */
 .inner {

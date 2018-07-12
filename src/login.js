@@ -1,12 +1,14 @@
 //Declración de Variables:
 const inputMailRecord = document.getElementById('mail-record');
 const inputPasswordRecord = document.getElementById('password-record');
-// const resgisterLink = document.getElementById('registerLink');
+const resgisterLink = document.getElementById('registerLink');
 const btnSignUp = document.getElementById('btn-signup');
 const inputMailAccess = document.getElementById('mail-access');
 const inputPasswordAccess = document.getElementById('password-access');
 const btnLogin = document.getElementById('btn-login');
 let containerText = document.getElementById('container-text');
+const signUp = document.getElementById('signUp');
+const signIn = document.getElementById('signIn');
 const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
 
@@ -48,12 +50,12 @@ const checkEmail = () => {
 }
 
 //Registrar nuevo usuario con correo y contraseña
-// resgisterLink.addEventListener('click', () => {
-//     let signIn = document.getElementById('signIn');
-//     let login = document.getElementById('login');
-//     login.style.display = 'none';
-//     signIn.style.display = 'block';
-// });
+resgisterLink.addEventListener('click', () => {
+    signIn.style.display='none';
+    signUp.style.display='block';
+    // inputMailRecord.style.display='block';
+    // inputPasswordRecord.style.display='block';
+});
 
 btnSignUp.addEventListener('click', registrar => {
     console.log("hola");
