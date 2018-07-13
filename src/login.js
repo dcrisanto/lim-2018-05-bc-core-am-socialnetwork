@@ -6,12 +6,14 @@ const btnSignUp = document.getElementById('btn-signup');
 const inputMailAccess = document.getElementById('mail-access');
 const inputPasswordAccess = document.getElementById('password-access');
 const btnLogin = document.getElementById('btn-login');
-let containerText = document.getElementById('container-text');
+const containerText = document.getElementById('container-text');
 const signUp = document.getElementById('signUp');
 const signIn = document.getElementById('signIn');
 const wall = document.getElementById('wall');
 const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
+const btnLoginGoogle = document.getElementById('btn-login-google');
+const btnLoginFacebook = document.getElementById('btn-login-facebook');
 
 // Initialize Firebase
 const config = {
@@ -154,3 +156,56 @@ const observer = () => {
 }
 
 observer()
+
+//Autentificación con Google
+btnLoginGoogle.addEventListener('click', handleAuth =>{
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+    .then(result => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const token = result.credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+        console.log(`${result.user.email} Ha iniciado sesión`);
+      }).catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential;
+        // ...
+        console.log(`Error ${error.code}: ${error.message}`);
+      });
+})
+
+//Autentificación con Facebook
+btnLoginFacebook.addEventListener('click', handleAuthFace =>{
+    //Si cuenta con una sesión activa
+    if (!firebase.auth().currentUser){
+        //Almacenar la información del proveedor facebook
+        const provider = new firebase.auth.FacebookAuthProvider();
+        provider.addScope('user_birthday');
+        firebase.auth().signInWithPopup(provider).then((result)=> {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const token = result.credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // ...
+            status.innerHTML = `
+        <p>Se validó que su cuenta si existe, Bienvenid@, usuario se encuentra activo</p>
+        `
+          }).catch((error)=> {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            const credential = error.credential;
+            // ...
+          });
+    }
+});
