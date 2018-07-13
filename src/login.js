@@ -9,6 +9,7 @@ const btnLogin = document.getElementById('btn-login');
 let containerText = document.getElementById('container-text');
 const signUp = document.getElementById('signUp');
 const signIn = document.getElementById('signIn');
+const wall = document.getElementById('wall');
 const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
 
@@ -84,6 +85,11 @@ btnLogin.addEventListener('click', logear => {
     let accessPassword = inputPasswordAccess.value;
 
     firebase.auth().signInWithEmailAndPassword(accessMail, accessPassword)
+    .then(()=>{
+        wall.style.display='block';
+        sign.style.display='none';
+    })
+
         .catch(function (error) {
             // Handle Errors here.
             const errorCode = error.code;
@@ -91,24 +97,28 @@ btnLogin.addEventListener('click', logear => {
             // ...
             containerText.innerHTML = 'No se encuentra registrado: ' + errorMessage;
         });
-    //containerText.innerHTML = 'Bienvenid@ a esta red social';
+
+    containerText.innerHTML = 'Bienvenid@ a esta red social';
+
     clearContent([inputMailAccess, inputPasswordAccess]);
 });
 
+
 //Cerrar sesión
-// btnSignOff.addEventListener('click', signOff => {
-//     firebase.auth().signOut()
-//         .then(() => {
-//             console.log('Cerrando sesión de red social');
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//         })
-// });
+btnSignOff.addEventListener('click', signOff => {
+    firebase.auth().signOut()
+        .then(() => {
+            console.log('Cerrando sesión de red social');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+});
 
 const showResult = (user) => {
     if (user.emailVerified) {
-        btnSignOff.classList.remove('hidden');
+    `wall.style.display="block"`
+        // btnSignOff.classList.remove('hidden');
         status.innerHTML = `
         <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
         `
@@ -120,6 +130,7 @@ const showResult = (user) => {
 const observer = () => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+
             showResult(user);
             // User is signed in.
             console.log(user);
@@ -137,8 +148,9 @@ const observer = () => {
             // ...
             status.innerHTML = 'Usuario inactivo';
         }
+
         //containerText.innerHTML = 'Sólo lo ve si existe usuario';
     });
 }
 
-observer();
+observer()
