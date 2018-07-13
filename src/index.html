@@ -12,9 +12,6 @@
   <title>Autenticación</title>
 </head>
 <body>
-  <div class="container-float">
-    <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/profile/6/9/7/a/ada2-97ae-49a5-bd50-a7b325404b30">
-  </div>
   <div class="container-login container-float">
     <table>
       <tbody>
@@ -53,10 +50,18 @@
       </button>
     </table>
   </div>
-  <button id="btn-logout">LOGOUT</button>
   <div id="container-text"></div>
   <div id="status"></div>
-  <button id="sign-off" class="hidden">Cerrar sesión</button>
+  <button id="sign-off" class="hidden">Logout</button>
+  <div class="col">
+    <a href="#" class="fb btn" id="btn-login-facebook">
+      <i class="fa fa-facebook fa-fw"></i> Regístrate con Facebook
+    </a>
+    <a href="#" class="google btn" id="btn-login-google">
+      <i class="fa fa-google fa-fw"></i> Regístrate con Google+
+    </a>
+  </div>
+  <!--<button id="btn-login-google">Google</button>-->
   <script src="login.js"></script>
 </body>
 
