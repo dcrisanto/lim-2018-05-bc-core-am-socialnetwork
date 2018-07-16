@@ -14,18 +14,35 @@ const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
 const btnLoginGoogle = document.getElementById('btn-login-google');
 const btnLoginFacebook = document.getElementById('btn-login-facebook');
+const userName = document.getElementById('user_name')
 
-// Initialize Firebase
-const config = {
-    apiKey: "AIzaSyAB7icNPz-tO88wVkgcCeNmlz9H1xd8OTU",
-    authDomain: "login-e3b98.firebaseapp.com",
-    databaseURL: "https://login-e3b98.firebaseio.com",
-    projectId: "login-e3b98",
-    storageBucket: "login-e3b98.appspot.com",
-    messagingSenderId: "857338189328"
-};
-firebase.initializeApp(config);
 
+window.onload=()=>{
+    
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            // showResult(user);
+            // User is signed in.
+            // console.log(user);
+            // let displayName = user.displayName;
+            // let email = user.email;
+            // let emailVerified = user.emailVerified;
+            // console.log(emailVerified);
+            // let photoURL = user.photoURL;
+            // let isAnonymous = user.isAnonymous;
+            // let uid = user.uid;
+            // let providerData = user.providerData;
+            //
+            console.log("el usuario está logeado")
+        } else {
+            // User is signed out.
+            // status.innerHTML = 'Usuario inactivo';
+            console.log("el usuario no está logueado")
+        }
+console.log('user' + JSON.stringify(user))
+        //containerText.innerHTML = 'Sólo lo ve si existe usuario';
+    });
+}
 const clearContent = (elements) => {
     elements.forEach(element => {
         clearElement(element);
@@ -54,14 +71,13 @@ const checkEmail = () => {
 
 //Registrar nuevo usuario con correo y contraseña
 resgisterLink.addEventListener('click', () => {
-    signIn.style.display='none';
-    signUp.style.display='block';
+    signIn.style.display = 'none';
+    signUp.style.display = 'block';
     // inputMailRecord.style.display='block';
     // inputPasswordRecord.style.display='block';
 });
 
 btnSignUp.addEventListener('click', registrar => {
-    console.log("hola");
     //Obtener email y pass
     let registrationMail = inputMailRecord.value;
     let registrationPassword = inputPasswordRecord.value;
@@ -71,9 +87,8 @@ btnSignUp.addEventListener('click', registrar => {
         })
         .catch((error) => {
             // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            containerText.innerHTML = 'Verfique los datos de registro: ' + errorMessage;
+
+            containerText.innerHTML = 'Verfique los datos de registro: ' + error.code + ':' + error.message;
             // ... 
         });
     containerText.innerHTML = 'Se registró satisfactoriamente';
@@ -81,16 +96,19 @@ btnSignUp.addEventListener('click', registrar => {
 });
 
 //Acceso de usuarios existentes
-btnLogin.addEventListener('click', logear => {
+btnLogin.addEventListener('click', () => {
     //Obtener email y pass registrados
     let accessMail = inputMailAccess.value;
     let accessPassword = inputPasswordAccess.value;
 
     firebase.auth().signInWithEmailAndPassword(accessMail, accessPassword)
-    .then(()=>{
-        wall.style.display='block';
-        sign.style.display='none';
-    })
+        .then(() => {
+            console.log('inició sesión');
+            wall.style.display = 'block';
+            sign.style.display = 'none';
+            var user = firebase.auth.currentUser;
+            userName.innerHTML = user.email;
+        })
 
         .catch(function (error) {
             // Handle Errors here.
@@ -113,13 +131,13 @@ btnSignOff.addEventListener('click', signOff => {
             console.log('Cerrando sesión de red social');
         })
         .catch((error) => {
-            console.log(error);
+            console.log('error al cerrar sesión');
         })
 });
 
 const showResult = (user) => {
     if (user.emailVerified) {
-    `wall.style.display="block"`
+        `wall.style.display="block"`
         // btnSignOff.classList.remove('hidden');
         status.innerHTML = `
         <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
@@ -129,75 +147,47 @@ const showResult = (user) => {
 }
 
 //Estado de autenticación
-const observer = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
+// const observer = () => {
+//     firebase.auth().onAuthStateChanged((user) => {
+//         if (user) {
 
-            showResult(user);
-            // User is signed in.
-            console.log(user);
-            let displayName = user.displayName;
-            let email = user.email;
-            let emailVerified = user.emailVerified;
-            console.log(emailVerified);
-            let photoURL = user.photoURL;
-            let isAnonymous = user.isAnonymous;
-            let uid = user.uid;
-            let providerData = user.providerData;
-            // ...
-        } else {
-            // User is signed out.
-            // ...
-            status.innerHTML = 'Usuario inactivo';
-        }
+//             showResult(user);
+//             // User is signed in.
+//             console.log(user);
+//             let displayName = user.displayName;
+//             let email = user.email;
+//             let emailVerified = user.emailVerified;
+//             console.log(emailVerified);
+//             let photoURL = user.photoURL;
+//             let isAnonymous = user.isAnonymous;
+//             let uid = user.uid;
+//             let providerData = user.providerData;
+//             // ...
+//         } else {
+//             // User is signed out.
+//             // ...
+//             status.innerHTML = 'Usuario inactivo';
+//         }
 
-        //containerText.innerHTML = 'Sólo lo ve si existe usuario';
-    });
-}
+//         //containerText.innerHTML = 'Sólo lo ve si existe usuario';
+//     });
+// }
 
-observer()
+// observer()
 
 //Autentificación con Google
-btnLoginGoogle.addEventListener('click', handleAuth =>{
-    const provider = new firebase.auth.GoogleAuthProvider();
+btnLoginGoogle.addEventListener('click', handleAuth => {
+    let provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
-    .then(result => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const token = result.credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // ...
-        console.log(`${result.user.email} Ha iniciado sesión`);
-      }).catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential;
-        // ...
-        console.log(`Error ${error.code}: ${error.message}`);
-      });
-})
-
-//Autentificación con Facebook
-btnLoginFacebook.addEventListener('click', handleAuthFace =>{
-    //Si cuenta con una sesión activa
-    if (!firebase.auth().currentUser){
-        //Almacenar la información del proveedor facebook
-        const provider = new firebase.auth.FacebookAuthProvider();
-        provider.addScope('user_birthday');
-        firebase.auth().signInWithPopup(provider).then((result)=> {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        .then(result => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
             const token = result.credential.accessToken;
             // The signed-in user info.
             const user = result.user;
             // ...
-            status.innerHTML = `
-        <p>Se validó que su cuenta si existe, Bienvenid@, usuario se encuentra activo</p>
-        `
-          }).catch((error)=> {
+            console.log(`${result.user.email} Ha iniciado sesión`);
+            console.log("ha iniciado sesión")
+        }).catch(error => {
             // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -206,6 +196,43 @@ btnLoginFacebook.addEventListener('click', handleAuthFace =>{
             // The firebase.auth.AuthCredential type that was used.
             const credential = error.credential;
             // ...
-          });
-    }
+            console.log(`Error ${error.message}`);
+            console.log("no ha iniciado sesión")
+        });
+})
+
+//Autentificación con Facebook
+btnLoginFacebook.addEventListener('click', ()=> {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    provider.setCustomParameters({
+    'display':'popup'
+    });
+    firebase.auth().signInWithPopup(provider)
+    .then((result)=>{ console.log('Logueado con fb');})
+    .catch((error)=> {console.log(error.code+ error.message)
+    });
+    //Si cuenta con una sesión activa
+    // if (!firebase.auth().currentUser) {
+    //     //Almacenar la información del proveedor facebook
+    //     provider.addScope('user_birthday');
+    //     firebase.auth().signInWithPopup(provider).then((result) => {
+    //         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //         const token = result.credential.accessToken;
+    //         // The signed-in user info.
+    //         const user = result.user;
+    //         // ...
+    //         status.innerHTML = `
+    //     <p>Se validó que su cuenta si existe, Bienvenid@, usuario se encuentra activo</p>
+    //     `
+    //     }).catch((error) => {
+    //         // Handle Errors here.
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message;
+    //         // The email of the user's account used.
+    //         const email = error.email;
+    //         // The firebase.auth.AuthCredential type that was used.
+    //         const credential = error.credential;
+    //         // ...
+    //     });
+    // }
 });
