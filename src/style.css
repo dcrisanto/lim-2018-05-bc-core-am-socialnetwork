@@ -95,8 +95,7 @@ h1{
   font-size: 28px;
 }
 /* style inputs and link buttons */
-input,
-.btn {
+input{
   width: 100%;
   /* padding: 12px; */
   border: none;
@@ -118,28 +117,16 @@ input:hover,
 .fb {
   background-color: #3B5998;
   color: white;
+  padding:1% 5%;
 }
 
-.twitter {
-  background-color: #55ACEE;
-  color: white;
-}
 
 .google {
   background-color: #dd4b39;
   color: white;
+  padding:1% 5%;
 }
 
-/* style the submit button */
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
 
 /* Two-column layout */
 .col {

@@ -1,4 +1,4 @@
-<!Doctype html>
+<!DOCTYPE HTML>
 <html>
 
 <head>
@@ -7,40 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans:400,800|Montserrat" rel="stylesheet">
-  
+
+
   <title>Autenticación</title>
 </head>
 
 <body>
-
-  
-<script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '209695559870372',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v3.0'
-      });
-        
-      FB.AppEvents.logPageView();   
-      FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-});
-    };
-  
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "https://connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-
-     
-
-  </script>
-
   <div id=backgroundImage></div>
 
   <div id="sign" class="container">
@@ -57,7 +29,12 @@
         <input type="password" id="password-access" name="pwd" value="">
 
         <input type="button" id="btn-login" class=".btn" value="LOGIN">
-
+        <a href="#" class="fb btn" id="btn-login-facebook">
+            <i class="fa fa-facebook fa-fw"></i> Facebook
+          </a>
+          <a href="#" class="google btn" id="btn-login-google">
+            <i class="fa fa-google fa-fw"></i> Google+
+          </a>
         <div class="row">
           <div class="col">
             <a id="registerLink" href="#" class="btn">Crear cuenta</a>
@@ -65,54 +42,40 @@
           </div>
         </div>
       </div>
-      <div id="fb-root"></div>
 
-      <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v3.0&appId=209695559870372&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
-      
       <div id="container-text"></div>
       <div id="status"></div>
 
-    </div>
-
-    <div id="signUp">
-
-      <div class="col">
-
-        <a href="#" class="fb btn" id="btn-login-facebook">
-          <i class="fa fa-facebook fa-fw"></i> Regístrate con Facebook
-        </a>
-        <a href="#" class="google btn" id="btn-login-google">
-          <i class="fa fa-google fa-fw"></i> Regístrate con Google+
-        </a>
       </div>
 
-      <div class="col">
-        <div class="hide-md-lg">
-          <p>O regístrate con tu correo:</p>
+      <div id="signUp">
+
+        <div class="col">
+
+
         </div>
 
-        <input id="mail-record" type="text" name="username" placeholder="email" required>
-        <input id="password-record" type="password" name="password" placeholder="password" required>
+        <div class="col">
+          <div class="hide-md-lg">
+            <p>O regístrate con tu correo:</p>
+          </div>
+
+          <input id="mail-record" type="text" name="username" placeholder="email" required>
+          <input id="password-record" type="password" name="password" placeholder="password" required>
 
 
 
-        <div class="bottom-container">
-          <input type="button" id="btn-signup" class=".btn" value="Regístrate">
+          <div class="bottom-container">
+            <input type="button" id="btn-signup" class=".btn" value="Regístrate">
+          </div>
+          <input type="button" id="return" value="volver al login">
+
+
         </div>
-        <input type="button" id="return" value="volver al login">
-
-
       </div>
-    </div>
 
-  </div>
-  </form>
+    </div>
+    </form>
 
   </div>
 
@@ -132,26 +95,10 @@
         <img src="logo.jpg" width="200" height="50" alt="logo">
       </div>
 
-      <ul class="tabs">
-        <li>
-          <a href="#tab1">Post</a>
-
-        </li>
-
-        <li>
-          <a href="#tab2">Acerca de</a>
-        </li>
-
-        <li>
-          <a href="#tab3">Postea</a>
-        </li>
-
-      </ul>
-
-      <div class="tab_container">
+<div class = "row">
+        <div class="tab_container">
         <div id="tab1" class="tab_content">
-
-
+<div class = "col">
 
           <div class="post">
             <h3>
@@ -170,13 +117,8 @@
 
         </div>
         <!--End Tab 1-->
-
-        <div class="post">
-        </div>
-        <!--End Blog Post-->
-
       </div>
-      <!--End Tab 1-->
+    </div>
 
       <div id="tab2" class="tab_content">
 
@@ -207,18 +149,19 @@
   </div>
   <!--End Wrapper -->
   <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-const config = {
-    apiKey: "AIzaSyAB7icNPz-tO88wVkgcCeNmlz9H1xd8OTU",
-    authDomain: "login-e3b98.firebaseapp.com",
-    databaseURL: "https://login-e3b98.firebaseio.com",
-    projectId: "login-e3b98",
-    storageBucket: "login-e3b98.appspot.com",
-    messagingSenderId: "857338189328"
-};
-firebase.initializeApp(config);
-</script>
+  <script>
+    // Initialize Firebase
+    const config = {
+      apiKey: "AIzaSyAB7icNPz-tO88wVkgcCeNmlz9H1xd8OTU",
+      authDomain: "login-e3b98.firebaseapp.com",
+      databaseURL: "https://login-e3b98.firebaseio.com",
+      projectId: "login-e3b98",
+      storageBucket: "login-e3b98.appspot.com",
+      messagingSenderId: "857338189328"
+    };
+    firebase.initializeApp(config);
+
+  </script>
   <script src="login.js"></script>
 </body>
 
