@@ -14,8 +14,8 @@ const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
 const btnLoginGoogle = document.getElementById('btn-login-google');
 const btnLoginFacebook = document.getElementById('btn-login-facebook');
-const userName = document.getElementById('user_name')
-
+let userHtml = document.getElementById('user_name');
+const returnToLogin = document.getElementById('return');
 
 window.onload = () => {
 
@@ -107,7 +107,7 @@ btnLogin.addEventListener('click', () => {
       wall.style.display = 'block';
       sign.style.display = 'none';
       var user = firebase.auth.currentUser;
-      userName.innerHTML = user.email;
+      userHtml.innerHTML = user.email;
     })
 
     .catch(function (error) {
@@ -128,8 +128,8 @@ btnLogin.addEventListener('click', () => {
 btnSignOff.addEventListener('click', signOff => {
   firebase.auth().signOut()
     .then(() => {
-        wall.style.display = 'none';
-        sign.style.display = 'block';
+      wall.style.display = 'none';
+      sign.style.display = 'block';
       console.log('Cerrando sesión de red social');
     })
     .catch((error) => {
@@ -137,6 +137,10 @@ btnSignOff.addEventListener('click', signOff => {
     })
 });
 
+returnToLogin.addEventListener('click', () =>{
+  signIn.style.display = 'block';
+  signUp.style.display = 'none';
+})
 const showResult = (user) => {
   if (user.emailVerified) {
     `wall.style.display="block"`
@@ -187,7 +191,7 @@ btnLoginGoogle.addEventListener('click', handleAuth => {
       // The signed-in user info.
       const user = result.user;
       // ...
-      console.log(`${result.user.email} Ha iniciado sesión`);
+      userHtml.innerHTML = `${result.user.displayName}`;
       console.log("ha iniciado sesión")
       wall.style.display = 'block';
       sign.style.display = 'none';
@@ -213,7 +217,7 @@ btnLoginFacebook.addEventListener('click', () => {
   });
   firebase.auth().signInWithPopup(provider)
     .then((result) => {
-      console.log('Logueado con fb');
+      userHtml.innerHTML = `${result.user.displayName}`;
       wall.style.display = 'block';
       sign.style.display = 'none';
     })
@@ -253,7 +257,7 @@ btnLoginFacebook.addEventListener('click', () => {
 //       xfbml      : true,
 //       version    : 'v3.0'
 //     });
-      
+
 //     FB.AppEvents.logPageView();  
 
 // };
