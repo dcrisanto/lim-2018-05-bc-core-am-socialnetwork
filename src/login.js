@@ -14,185 +14,233 @@ const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
 const btnLoginGoogle = document.getElementById('btn-login-google');
 const btnLoginFacebook = document.getElementById('btn-login-facebook');
+let userHtml = document.getElementById('user_name');
+const returnToLogin = document.getElementById('return');
+const btnPost = document.getElementById('btn-post');
 
-// Initialize Firebase
-const config = {
-    apiKey: "AIzaSyAB7icNPz-tO88wVkgcCeNmlz9H1xd8OTU",
-    authDomain: "login-e3b98.firebaseapp.com",
-    databaseURL: "https://login-e3b98.firebaseio.com",
-    projectId: "login-e3b98",
-    storageBucket: "login-e3b98.appspot.com",
-    messagingSenderId: "857338189328"
-};
-firebase.initializeApp(config);
+//Validar estado de usuario - Observador
+window.onload = () => {
 
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        showResult(user);
+    } else {
+      containerText.innerHTML='';
+      containerText.innerHTML=`<p>Valide su cuenta ${user.email} para logearse`;
+    }
+  });
+}
 const clearContent = (elements) => {
-    elements.forEach(element => {
-        clearElement(element);
-    });
+  elements.forEach(element => {
+    clearElement(element);
+  });
 }
 
 const clearElement = (element) => {
-    if (element.value) {
-        element.value = '';
-    }
-    element.innerHTML = '';
+  if (element.value) {
+    element.value = '';
+  }
+  element.innerHTML = '';
 }
 
 //Enviar un mensaje de verificación al usuario
 const checkEmail = () => {
-    const user = firebase.auth().currentUser;
-    user.sendEmailVerification().then(() => {
-        observer();
-        // Email sent.
-    }).catch((error) => {
-        // An error happened.
-        containerText.innerHTML =
-        `<p>error</p>
-        `
-    });
+  const user = firebase.auth().currentUser;
+  user.sendEmailVerification().then(() => {
+    document.getElementById('container-sigup').innerHTML='';
+    document.getElementById('container-sigup').innerHTML = `<p>Se ha enviado un correo de validación</p>`;
+    console.log(user);
+    // Email sent.
+  }).catch((error) => {
+    document.getElementById('container-sigup').innerHTML='';
+    document.getElementById('container-sigup').innerHTML = `<p>Ha ocurrido un error</p>`;
+  
+  });
 }
 
 //Registrar nuevo usuario con correo y contraseña
 resgisterLink.addEventListener('click', () => {
-    signIn.style.display='none';
-    signUp.style.display='block';
-    inputMailRecord.style.display='block';
-    inputPasswordRecord.style.display='block';
+  signIn.style.display = 'none';
+  signUp.style.display = 'block';
+  // inputMailRecord.style.display='block';
+  // inputPasswordRecord.style.display='block';
 });
 
 btnSignUp.addEventListener('click', registrar => {
-    //Obtener email y pass
-    let registrationMail = inputMailRecord.value;
-    let registrationPassword = inputPasswordRecord.value;
-    firebase.auth().createUserWithEmailAndPassword(registrationMail, registrationPassword)
-        .then(() => {
-            document.getElementById('prueba').innerHTML =
-        `<p>Se ha enviado un correo de verificación</p>
-        `
-            checkEmail();
-        })
-        .catch((error) => {
-            // Handle Errors here.
-            document.getElementById('prueba').innerHTML = error.code + error.message;
-            // ... 
-        });
+  //Obtener email y pass
+  let registrationMail = inputMailRecord.value;
+  let registrationPassword = inputPasswordRecord.value;
+  firebase.auth().createUserWithEmailAndPassword(registrationMail, registrationPassword)
+    .then(() => {
+      checkEmail();
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      document.getElementById('container-sigup').innerHTML= `<p>${error.code}:${error.message} </p>` 
+      //containerText.innerHTML = 'Verfique los datos de registro: ' + error.code + ':' + error.message;
+      // ... 
+    });
     clearContent([inputMailRecord, inputPasswordRecord]);
 });
 
-const showResult = (user) => {
-    if (user.emailVerified) {
-    `wall.style.display="block"`
-        // btnSignOff.classList.remove('hidden');
-        status.innerHTML = `
-        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
-        `
-    }
-}
-
-//Estado de autenticación
-const observer = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            showResult(user);
-            // User is signed in.
-            let displayName = user.displayName;
-            let email = user.email;
-            let emailVerified = user.emailVerified;
-            let photoURL = user.photoURL;
-            let isAnonymous = user.isAnonymous;
-            let uid = user.uid;
-            let providerData = user.providerData;
-            // ...
-            console.log('exite usuario');
-        } else {
-            // User is signed out.
-            // ...
-            console.log('no existe usuario')
-            status.innerHTML = 'Usuario inactivo';
-        }
-
-        //containerText.innerHTML = 'Sólo lo ve si existe usuario';
-    });
-}
-
-//Acceso de usuarios existentes
-btnLogin.addEventListener('click', logear => {
+btnLogin.addEventListener('click', login = () => {
     //Obtener email y pass registrados
     let accessMail = inputMailAccess.value;
     let accessPassword = inputPasswordAccess.value;
-
+  
     firebase.auth().signInWithEmailAndPassword(accessMail, accessPassword)
-    .then(()=>{
-        wall.style.display='block';
-        sign.style.display='none';
-    })
-
-        .catch((error) => {
-            // Handle Errors here.
-            containerText.innerHTML = error.code + error.message;
-        });
-
-    containerText.innerHTML = `<p>Bienvenid@ a esta red social</p>`;
+      .then(() => {
+        //wall.style.display = 'block';
+        //sign.style.display = 'none';
+        var user = firebase.auth.currentUser;
+        userHtml.innerHTML = user.email;
+      })
+  
+      .catch(function (error) {
+        // Handle Errors here.
+        // ...
+        containerText.innerHTML = `<p>No se encuentra registrado ${error.code}:${error.message}</p>`
+      });
+  
     clearContent([inputMailAccess, inputPasswordAccess]);
-});
+  });
 
 
 //Cerrar sesión
 btnSignOff.addEventListener('click', signOff => {
-    firebase.auth().signOut()
-        .then(() => {
-            containerText.innerHTML = `<p>Cerrando Sesión</p>`;
-        })
-        .catch((error) => {
-            containerText.innerHTML = error;
-        })
+  firebase.auth().signOut()
+    .then(() => {
+      wall.style.display = 'none';
+      sign.style.display = 'block';
+      //console.log('Cerrando sesión de red social');
+    })
+    .catch((error) => {
+      //console.log('error al cerrar sesión');
+    })
 });
 
+returnToLogin.addEventListener('click', () =>{
+  signIn.style.display = 'block';
+  signUp.style.display = 'none';
+})
+const showResult = (user) => {
+  if (user.emailVerified) {
+    `wall.style.display="block"`
+    wall.style.display = 'block';
+        sign.style.display = 'none';
+    status.innerHTML = `
+        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
+        `
+  }else{
+      console.log('No logearse');
+  }
+
+}
+
+
+const  writeUserData = (userId, name, email, imageUrl) =>{
+    firebase.database().ref('users/' + userId).set({
+        username: name,
+        email: email,
+        profile_picture: imageUrl
+    });
+}
+const writeNewPost = (uid, body)=> {
+    // A post entry.
+    var postData = {
+        uid: uid,
+        body: body,
+    };
+    // Get a key for a new Post.
+    var newPostKey = firebase.database().ref().child('posts').push().key;
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['/posts/' + newPostKey] = postData;
+    updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+    firebase.database().ref().update(updates);
+    return newPostKey;
+}
+
+btnPost.addEventListener('click', () => {
+    var userId = firebase.auth().currentUser.uid;
+    const newPost = writeNewPost(userId, post.value);
+    posts.innerHTML += `
+      <div>
+          <textarea id="${newPost}">${post.value}</textarea>
+          <button id ="update" type="button">Update</button>
+          <button id="delete" type="button">Delete</button>
+      </div>`
+    const btnUpdate = document.getElementById('update');
+    const btnDelete = document.getElementById('delete');
+    btnDelete.addEventListener('click', (e) => {
+      e.preventDefault();
+      firebase.database().ref().child('/user-posts/' + userId + '/' + newPost).remove();
+      firebase.database().ref().child('posts/' + newPost).remove();
+      while (posts.firstChild) posts.removeChild(posts.firstChild);
+      console.log('El usuario esta eliminando  successfully!');
+      // reload_page();
+    });
+  
+    btnUpdate.addEventListener('click', () => {
+      const newUpdate = document.getElementById(newPost);
+      const nuevoPost = {
+        body: newUpdate.value,
+      };
+      var updatesUser = {};
+      var updatesPost = {};
+      updatesUser['/user-posts/' + userId + '/' + newPost] = nuevoPost;
+      updatesPost['/posts/' + newPost] = nuevoPost;
+      firebase.database().ref().update(updatesUser);
+      firebase.database().ref().update(updatesPost);
+    });
+  });
+
+
 //Autentificación con Google
-btnLoginGoogle.addEventListener('click', handleAuth =>{
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+btnLoginGoogle.addEventListener('click', handleAuth => {
+  let provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
     .then(result => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const token = result.credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // ...
-        containerText.innerHTML = `<p> Bienvenid@ a esta red social, ha iniciado sesión con: + ${result.user.email}`;
-      }).catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential;
-        // ...
-        console.log(`Error ${error.code}: ${error.message}`);
-      });
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const token = result.credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // ...
+      userHtml.innerHTML = `${result.user.displayName}`;
+      //console.log("ha iniciado sesión")
+      wall.style.display = 'block';
+      sign.style.display = 'none';
+    }).catch(error => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential;
+      // ...
+      //console.log(`Error ${error.message}`);
+      //console.log("no ha iniciado sesión")
+    });
 })
 
 //Autentificación con Facebook
-btnLoginFacebook.addEventListener('click', handleAuthFace =>{
-    //Si cuenta con una sesión activa
-    if (!firebase.auth().currentUser){
-        //Almacenar la información del proveedor facebook
-        const provider = new firebase.auth.FacebookAuthProvider();
-        provider.addScope('public_profile');
-        firebase.auth().signInWithPopup(provider).then((result)=> {
-            // ...
-            document.getElementById('prueba').innerHTML = `<p>Bienvenida ${result.user.displayName}</p>`;
-        console.log('face');
-          }).catch((error)=> {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            const credential = error.credential;
-            // ...
-          });
-    }
+btnLoginFacebook.addEventListener('click', () => {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  provider.setCustomParameters({
+    'display': 'popup'
+  });
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      userHtml.innerHTML = `${result.user.displayName}`;
+      wall.style.display = 'block';
+      sign.style.display = 'none';
+    })
+    .catch((error) => {
+      //console.log(error.code + error.message)
+    });
+  
 });
+
+
+
