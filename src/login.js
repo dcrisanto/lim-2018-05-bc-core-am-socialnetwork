@@ -70,7 +70,6 @@ btnSignUp.addEventListener('click', registrar => {
     .catch((error) => {
       // Handle Errors here.
       document.getElementById('container-sigup').innerHTML= `<p>${error.code}:${error.message} </p>` 
-      containerText.innerHTML = 'Verfique los datos de registro: ' + error.code + ':' + error.message;
     });
     clearContent([inputMailRecord, inputPasswordRecord]);
 });
@@ -110,6 +109,23 @@ btnSignOff.addEventListener('click', signOff => {
     })
 });
 
+returnToLogin.addEventListener('click', () =>{
+  signIn.style.display = 'block';
+  signUp.style.display = 'none';
+})
+const showResult = (user) => {
+  if (user.emailVerified) {
+    `wall.style.display="block"`
+    wall.style.display = 'block';
+        sign.style.display = 'none';
+    containerText.innerHTML = `
+        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
+        `
+  }else{
+      console.log('No logearse');
+  }
+
+}
 
 
 const  writeUserData = (userId, name, email, imageUrl) =>{
@@ -168,10 +184,7 @@ btnPost.addEventListener('click', () => {
       firebase.database().ref().update(updatesPost);
     });
   });
-returnToLogin.addEventListener('click', () =>{
-  signIn.style.display = 'block';
-  signUp.style.display = 'none';
-})
+
 const showResult = (user) => {
   if (user.emailVerified) {
     `wall.style.display="block"`
