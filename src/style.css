@@ -1,3 +1,64 @@
+#btn-post{
+
+}
+
+#sign-off{
+  background-color: transparent;
+  color: inherit;
+  display: inline-block;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  height: 27px;
+  line-height: 28px;
+  padding: 0 10px 1px;
+  position: relative;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
+  position: relative;
+  padding: 0 12px 1px;
+  color: #365899;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 24px;
+  left: 500px;
+  position: absolute;
+  top: 2px;
+  width: 204px;
+}
+
+#post{
+  background-color: transparent;
+  color: inherit;
+  display: inline-block;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: bold;
+  line-height: 28px;
+  padding: 0 10px 1px;
+  position: relative;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
+  position: relative;
+  padding: 0 12px 1px;
+  color: #365899;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 240px;
+  left: 100px;
+  position: absolute;
+  top: 100px;
+  width: 400px;
+}
+
 #signIn {
   display: block;
 }

@@ -77,8 +77,6 @@ btnSignUp.addEventListener('click', registrar => {
     .catch((error) => {
       // Handle Errors here.
       document.getElementById('container-sigup').innerHTML= `<p>${error.code}:${error.message} </p>` 
-      //containerText.innerHTML = 'Verfique los datos de registro: ' + error.code + ':' + error.message;
-      // ... 
     });
     clearContent([inputMailRecord, inputPasswordRecord]);
 });
@@ -128,7 +126,7 @@ const showResult = (user) => {
     `wall.style.display="block"`
     wall.style.display = 'block';
         sign.style.display = 'none';
-    status.innerHTML = `
+    containerText.innerHTML = `
         <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
         `
   }else{
@@ -201,13 +199,8 @@ btnLoginGoogle.addEventListener('click', handleAuth => {
   let provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider)
     .then(result => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const token = result.credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // ...
-      userHtml.innerHTML = `${result.user.displayName}`;
-      //console.log("ha iniciado sesión")
+      console.log(result);
+      userHtml.innerHTML = `Bienvenida ${result.user.displayName}`;
       wall.style.display = 'block';
       sign.style.display = 'none';
     }).catch(error => {
