@@ -1,10 +1,10 @@
 //Declración de Variables:
-const inputMailRecord = document.getElementById('mail-record');
-const inputPasswordRecord = document.getElementById('password-record');
-const resgisterLink = document.getElementById('registerLink');
+const inputMailRecord = document.getElementById('emailR');
+const inputPasswordRecord = document.getElementById('passwordrR');
+ const resgisterLink = document.getElementById('registerLink');
 const btnSignUp = document.getElementById('btn-signup');
-const inputMailAccess = document.getElementById('mail-access');
-const inputPasswordAccess = document.getElementById('password-access');
+const inputMailAccess = document.getElementById('email');
+const inputPasswordAccess = document.getElementById('password');
 const btnLogin = document.getElementById('btn-login');
 const containerText = document.getElementById('container-text');
 const signUp = document.getElementById('signUp');
@@ -47,24 +47,17 @@ const clearElement = (element) => {
 const checkEmail = () => {
   const user = firebase.auth().currentUser;
   user.sendEmailVerification().then(() => {
-    document.getElementById('container-sigup').innerHTML='';
-    document.getElementById('container-sigup').innerHTML = `<p>Se ha enviado un correo de validación</p>`;
+    document.getElementById('container-signup').innerHTML='';
+    document.getElementById('container-signup').innerHTML = `<p>Se ha enviado un correo de validación</p>`;
     console.log(user);
     // Email sent.
   }).catch((error) => {
-    document.getElementById('container-sigup').innerHTML='';
-    document.getElementById('container-sigup').innerHTML = `<p>Ha ocurrido un error</p>`;
+    document.getElementById('container-signup').innerHTML='';
+    document.getElementById('container-signup').innerHTML = `<p>Ha ocurrido un error</p>`;
   
   });
 }
 
-//Registrar nuevo usuario con correo y contraseña
-resgisterLink.addEventListener('click', () => {
-  signIn.style.display = 'none';
-  signUp.style.display = 'block';
-  // inputMailRecord.style.display='block';
-  // inputPasswordRecord.style.display='block';
-});
 
 btnSignUp.addEventListener('click', registrar => {
   //Obtener email y pass
@@ -77,8 +70,7 @@ btnSignUp.addEventListener('click', registrar => {
     .catch((error) => {
       // Handle Errors here.
       document.getElementById('container-sigup').innerHTML= `<p>${error.code}:${error.message} </p>` 
-      //containerText.innerHTML = 'Verfique los datos de registro: ' + error.code + ':' + error.message;
-      // ... 
+      containerText.innerHTML = 'Verfique los datos de registro: ' + error.code + ':' + error.message;
     });
     clearContent([inputMailRecord, inputPasswordRecord]);
 });
@@ -90,8 +82,8 @@ btnLogin.addEventListener('click', login = () => {
   
     firebase.auth().signInWithEmailAndPassword(accessMail, accessPassword)
       .then(() => {
-        //wall.style.display = 'block';
-        //sign.style.display = 'none';
+        wall.style.display = 'block';
+        signUp.style.display = 'none';
         var user = firebase.auth.currentUser;
         userHtml.innerHTML = user.email;
       })
@@ -104,7 +96,6 @@ btnLogin.addEventListener('click', login = () => {
   
     clearContent([inputMailAccess, inputPasswordAccess]);
   });
-
 
 //Cerrar sesión
 btnSignOff.addEventListener('click', signOff => {
@@ -119,23 +110,6 @@ btnSignOff.addEventListener('click', signOff => {
     })
 });
 
-returnToLogin.addEventListener('click', () =>{
-  signIn.style.display = 'block';
-  signUp.style.display = 'none';
-})
-const showResult = (user) => {
-  if (user.emailVerified) {
-    `wall.style.display="block"`
-    wall.style.display = 'block';
-        sign.style.display = 'none';
-    status.innerHTML = `
-        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
-        `
-  }else{
-      console.log('No logearse');
-  }
-
-}
 
 
 const  writeUserData = (userId, name, email, imageUrl) =>{
@@ -194,20 +168,39 @@ btnPost.addEventListener('click', () => {
       firebase.database().ref().update(updatesPost);
     });
   });
+returnToLogin.addEventListener('click', () =>{
+  signIn.style.display = 'block';
+  signUp.style.display = 'none';
+})
+const showResult = (user) => {
+  if (user.emailVerified) {
+    `wall.style.display="block"`
+    wall.style.display = 'block';
+        sign.style.display = 'none';
+    status.innerHTML = `
+        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
+        `
+  }else{
+      console.log('No logearse');
+  }
 
+}
+
+
+  resgisterLink.addEventListener('click', newAccount=() => {
+    signIn.style.display = 'none';
+    signUp.style.display = 'block';
+    // inputMailRecord.style.display='block';
+    // inputPasswordRecord.style.display='block';
+  });
 
 //Autentificación con Google
 btnLoginGoogle.addEventListener('click', handleAuth => {
   let provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider)
     .then(result => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const token = result.credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      // ...
-      userHtml.innerHTML = `${result.user.displayName}`;
-      //console.log("ha iniciado sesión")
+      console.log(result);
+      userHtml.innerHTML = `Bienvenida ${result.user.displayName}`;
       wall.style.display = 'block';
       sign.style.display = 'none';
     }).catch(error => {
@@ -241,6 +234,4 @@ btnLoginFacebook.addEventListener('click', () => {
     });
   
 });
-
-
 
