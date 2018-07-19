@@ -1,10 +1,10 @@
 //Declración de Variables:
 const inputMailRecord = document.getElementById('emailR');
-const inputPasswordRecord = document.getElementById('passwordrR');
+const inputPasswordRecord = document.getElementById('passwordR');
  const resgisterLink = document.getElementById('registerLink');
 const btnSignUp = document.getElementById('btn-signup');
-const inputMailAccess = document.getElementById('email');
-const inputPasswordAccess = document.getElementById('password');
+const inputMailAccess = document.getElementById('mail-access');
+const inputPasswordAccess = document.getElementById('password-access');
 const btnLogin = document.getElementById('btn-login');
 const containerText = document.getElementById('container-text');
 const signUp = document.getElementById('signUp');
@@ -58,6 +58,13 @@ const checkEmail = () => {
   });
 }
 
+//Registrar nuevo usuario con correo y contraseña
+resgisterLink.addEventListener('click', () => {
+  signIn.style.display = 'none';
+  signUp.style.display = 'block';
+  // inputMailRecord.style.display='block';
+  // inputPasswordRecord.style.display='block';
+});
 
 btnSignUp.addEventListener('click', registrar => {
   //Obtener email y pass
@@ -186,27 +193,6 @@ btnPost.addEventListener('click', () => {
   });
 });
 
-const showResult = (user) => {
-  if (user.emailVerified) {
-    `wall.style.display="block"`
-    wall.style.display = 'block';
-        sign.style.display = 'none';
-    status.innerHTML = `
-        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
-        `
-  }else{
-      console.log('No logearse');
-  }
-
-}
-
-
-  resgisterLink.addEventListener('click', newAccount=() => {
-    signIn.style.display = 'none';
-    signUp.style.display = 'block';
-    // inputMailRecord.style.display='block';
-    // inputPasswordRecord.style.display='block';
-  });
 
 //Autentificación con Google
 btnLoginGoogle.addEventListener('click', () => {
