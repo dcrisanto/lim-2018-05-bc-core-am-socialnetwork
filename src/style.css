@@ -1,5 +1,5 @@
 #btn-post{
-
+  width: 100px;
 }
 
 #sign-off{
@@ -25,7 +25,7 @@
   border-radius: 2px;
   box-sizing: border-box;
   height: 24px;
-  left: 500px;
+  left: 600px;
   position: absolute;
   top: 2px;
   width: 204px;
