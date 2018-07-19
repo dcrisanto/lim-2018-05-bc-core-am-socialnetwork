@@ -1,6 +1,9 @@
 //Declración de Variables:
-const inputMailRecord = document.getElementById('mail-record');
-const inputPasswordRecord = document.getElementById('password-record');
+
+const inputMailRecord = document.getElementById('emailR');
+const inputPasswordRecord = document.getElementById('passwordR');
+ const resgisterLink = document.getElementById('registerLink');
+const btnSignUp = document.getElementById('btn-signup');
 const inputMailAccess = document.getElementById('mail-access');
 const inputPasswordAccess = document.getElementById('password-access');
 const containerText = document.getElementById('container-text');
@@ -29,10 +32,10 @@ window.onload = () => {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-        showResult(user);
+      showResult(user);
     } else {
-      containerText.innerHTML='';
-      containerText.innerHTML=`<p>Valide su cuenta ${user.email} para logearse`;
+      containerText.innerHTML = '';
+      containerText.innerHTML = `<p>Valide su cuenta ${user.email} para logearse`;
     }
   });
 }
@@ -53,14 +56,14 @@ const clearElement = (element) => {
 const checkEmail = () => {
   const user = firebase.auth().currentUser;
   user.sendEmailVerification().then(() => {
-    document.getElementById('container-sigup').innerHTML='';
+    document.getElementById('container-sigup').innerHTML = '';
     document.getElementById('container-sigup').innerHTML = `<p>Se ha enviado un correo de validación</p>`;
     console.log(user);
     // Email sent.
   }).catch((error) => {
-    document.getElementById('container-sigup').innerHTML='';
+    document.getElementById('container-sigup').innerHTML = '';
     document.getElementById('container-sigup').innerHTML = `<p>Ha ocurrido un error</p>`;
-  
+
   });
 }
 
@@ -80,9 +83,9 @@ $('#btn-signup').click(registrar = () => {
     })
     .catch((error) => {
       // Handle Errors here.
-      document.getElementById('container-sigup').innerHTML= `<p>${error.code}:${error.message} </p>` 
+      document.getElementById('container-sigup').innerHTML = `<p>${error.code}:${error.message} </p>`
     });
-    clearContent([inputMailRecord, inputPasswordRecord]);
+  clearContent([inputMailRecord, inputPasswordRecord]);
 });
 
 $('#btn-login').click(login = () => {
@@ -107,7 +110,6 @@ $('#btn-login').click(login = () => {
     clearContent([inputMailAccess, inputPasswordAccess]);
   });
 
-
 //Cerrar sesión
   $('#sign-off').click(()=> {
   firebase.auth().signOut()
@@ -124,38 +126,40 @@ $('#return').click(() =>{
   signUp.style.display = 'none';
 })
 
-const  writeUserData = (userId, name, email, imageUrl) =>{
-    firebase.database().ref('users/' + userId).set({
-        username: name,
-        email: email,
-        profile_picture: imageUrl
-    });
+const writeUserData = (userId, name, email, imageUrl) => {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    profile_picture: imageUrl
+  });
 }
-const writeNewPost = (uid, body)=> {
-    // A post entry.
-    var postData = {
-        uid: uid,
-        body: body,
-    };
-    // Get a key for a new Post.
-    var newPostKey = firebase.database().ref().child('posts').push().key;
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates['/posts/' + newPostKey] = postData;
-    updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-    firebase.database().ref().update(updates);
-    return newPostKey;
+const writeNewPost = (uid, body) => {
+  // A post entry.
+  var postData = {
+    uid: uid,
+    body: body,
+  };
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child('posts').push().key;
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates['/posts/' + newPostKey] = postData;
+  updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+  firebase.database().ref().update(updates);
+  return newPostKey;
 }
 
 $('#btn-post').click(()=> {
     var userId = firebase.auth().currentUser.uid;
     const newPost = writeNewPost(userId, post.value);
     posts.innerHTML += `
+
       <div>
           <textarea id="${newPost}">${post.value}</textarea>
           <button id ="update" type="button">Update</button>
           <button id="delete" type="button">Delete</button>
       </div>`
+
     const btnUpdate = document.getElementById('update');
     const btnDelete = document.getElementById('delete');
     btnDelete.addEventListener('click', (e) => {
@@ -180,44 +184,65 @@ $('#btn-post').click(()=> {
     });
   });
 
+  btnUpdate.addEventListener('click', () => {
+    const newUpdate = document.getElementById(newPost);
+    const nuevoPost = {
+      body: newUpdate.value,
+    };
+    var updatesUser = {};
+    var updatesPost = {};
+    updatesUser['/user-posts/' + userId + '/' + newPost] = nuevoPost;
+    updatesPost['/posts/' + newPost] = nuevoPost;
+    firebase.database().ref().update(updatesUser);
+    firebase.database().ref().update(updatesPost);
+  });
+});
+
 
 //Autentificación con Google
   $('#btn-login-google').click(()=> {
   let provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider)
-    .then(result => {
-      console.log(result);
-      userHtml.innerHTML = `Bienvenida ${result.user.displayName}`;
-      wall.style.display = 'block';
-      sign.style.display = 'none';
-    }).catch(error => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      const credential = error.credential;
-    });
-})
-
-//Autentificación con Facebook
-  $('#btn-login-facebook').click(()=> {
-  const provider = new firebase.auth.FacebookAuthProvider();
   provider.setCustomParameters({
     'display': 'popup'
   });
   firebase.auth().signInWithPopup(provider)
     .then((result) => {
+      console.log('ghgyy');
       userHtml.innerHTML = `${result.user.displayName}`;
       wall.style.display = 'block';
       sign.style.display = 'none';
     })
     .catch((error) => {
-      //console.log(error.code + error.message)
+      console.log('yyyyyyyyyyyyyyy');
+      // Handle Errors here.
+/*       const errorCode = error.code;
+      const errorMessage = error.message; */
+      // The email of the user's account used.
+      // const email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential;
+
     });
-  
 });
 
+//Autentificación con Facebook
 
+  $('#btn-login-facebook').click(()=> {
+  const provider = new firebase.auth.FacebookAuthProvider();
 
+  provider.setCustomParameters({
+    'display': 'popup'
+  });
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      console.log('ghgyy');
+      userHtml.innerHTML = `${result.user.displayName}`;
+      wall.style.display = 'block';
+      sign.style.display = 'none';
+    })
+    .catch((error) => {
+      console.log('yyyyyyyyyyyyyyy');
+      //console.log(error.code + error.message)
+    });
+
+})
