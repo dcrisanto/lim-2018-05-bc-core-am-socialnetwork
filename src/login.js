@@ -1,22 +1,31 @@
 //Declración de Variables:
+
 const inputMailRecord = document.getElementById('emailR');
 const inputPasswordRecord = document.getElementById('passwordR');
  const resgisterLink = document.getElementById('registerLink');
 const btnSignUp = document.getElementById('btn-signup');
 const inputMailAccess = document.getElementById('mail-access');
 const inputPasswordAccess = document.getElementById('password-access');
-const btnLogin = document.getElementById('btn-login');
 const containerText = document.getElementById('container-text');
 const signUp = document.getElementById('signUp');
 const signIn = document.getElementById('signIn');
 const wall = document.getElementById('wall');
-const btnSignOff = document.getElementById('sign-off');
 const status = document.getElementById('status');
-const btnLoginGoogle = document.getElementById('btn-login-google');
-const btnLoginFacebook = document.getElementById('btn-login-facebook');
 let userHtml = document.getElementById('user_name');
-const returnToLogin = document.getElementById('return');
-const btnPost = document.getElementById('btn-post');
+
+
+const showResult = (user) => {
+  if (user.emailVerified) {
+    `wall.style.display="block"`
+    wall.style.display = 'block';
+        sign.style.display = 'none';
+    containerText.innerHTML = `
+        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
+        `
+  }else{
+      console.log('No logearse');
+  }
+}
 
 //Validar estado de usuario - Observador
 window.onload = () => {
@@ -59,14 +68,12 @@ const checkEmail = () => {
 }
 
 //Registrar nuevo usuario con correo y contraseña
-resgisterLink.addEventListener('click', () => {
+$('#registerLink').click(() => {
   signIn.style.display = 'none';
   signUp.style.display = 'block';
-  // inputMailRecord.style.display='block';
-  // inputPasswordRecord.style.display='block';
 });
 
-btnSignUp.addEventListener('click', registrar => {
+$('#btn-signup').click(registrar = () => {
   //Obtener email y pass
   let registrationMail = inputMailRecord.value;
   let registrationPassword = inputPasswordRecord.value;
@@ -81,60 +88,43 @@ btnSignUp.addEventListener('click', registrar => {
   clearContent([inputMailRecord, inputPasswordRecord]);
 });
 
-btnLogin.addEventListener('click', login = () => {
-  //Obtener email y pass registrados
-  let accessMail = inputMailAccess.value;
-  let accessPassword = inputPasswordAccess.value;
-
-  firebase.auth().signInWithEmailAndPassword(accessMail, accessPassword)
-    .then(() => {
-      // wall.style.display = 'block';
-      // sign.style.display = 'none';
-      var user = firebase.auth.currentUser;
-      userHtml.innerHTML = user.email;
-    })
-
-    .catch(function (error) {
-      // Handle Errors here.
-      // ...
-      containerText.innerHTML = `<p>No se encuentra registrado ${error.code}:${error.message}</p>`
-    });
-
-  clearContent([inputMailAccess, inputPasswordAccess]);
-});
-
+$('#btn-login').click(login = () => {
+    //Obtener email y pass registrados
+    let accessMail = inputMailAccess.value;
+    let accessPassword = inputPasswordAccess.value;
+  
+    firebase.auth().signInWithEmailAndPassword(accessMail, accessPassword)
+      .then(() => {
+        //wall.style.display = 'block';
+        //sign.style.display = 'none';
+        var user = firebase.auth.currentUser;
+        userHtml.innerHTML = user.email;
+      })
+  
+      .catch(function (error) {
+        // Handle Errors here.
+        // ...
+        containerText.innerHTML = `<p>No se encuentra registrado ${error.code}:${error.message}</p>`
+      });
+  
+    clearContent([inputMailAccess, inputPasswordAccess]);
+  });
 
 //Cerrar sesión
-btnSignOff.addEventListener('click', signOff => {
+  $('#sign-off').click(()=> {
   firebase.auth().signOut()
     .then(() => {
       wall.style.display = 'none';
       sign.style.display = 'block';
-      //console.log('Cerrando sesión de red social');
     })
     .catch((error) => {
-      //console.log('error al cerrar sesión');
     })
 });
 
-returnToLogin.addEventListener('click', () => {
+$('#return').click(() =>{
   signIn.style.display = 'block';
   signUp.style.display = 'none';
 })
-const showResult = (user) => {
-  if (user.emailVerified) {
-    `wall.style.display="block"`
-    wall.style.display = 'block';
-    sign.style.display = 'none';
-    containerText.innerHTML = `
-        <p>Se validó que su correo si existe, Bienvenid@, usuario se encuentra activo</p>
-        `
-  } else {
-    console.log('No logearse');
-  }
-
-}
-
 
 const writeUserData = (userId, name, email, imageUrl) => {
   firebase.database().ref('users/' + userId).set({
@@ -159,24 +149,39 @@ const writeNewPost = (uid, body) => {
   return newPostKey;
 }
 
-btnPost.addEventListener('click', () => {
-  var userId = firebase.auth().currentUser.uid;
-  const newPost = writeNewPost(userId, post.value);
-  posts.innerHTML += `
+$('#btn-post').click(()=> {
+    var userId = firebase.auth().currentUser.uid;
+    const newPost = writeNewPost(userId, post.value);
+    posts.innerHTML += `
+
       <div>
           <textarea id="${newPost}">${post.value}</textarea>
           <button id ="update" type="button">Update</button>
           <button id="delete" type="button">Delete</button>
       </div>`
-  const btnUpdate = document.getElementById('update');
-  const btnDelete = document.getElementById('delete');
-  btnDelete.addEventListener('click', (e) => {
-    e.preventDefault();
-    firebase.database().ref().child('/user-posts/' + userId + '/' + newPost).remove();
-    firebase.database().ref().child('posts/' + newPost).remove();
-    while (posts.firstChild) posts.removeChild(posts.firstChild);
-    console.log('El usuario esta eliminando  successfully!');
-    // reload_page();
+
+    const btnUpdate = document.getElementById('update');
+    const btnDelete = document.getElementById('delete');
+    btnDelete.addEventListener('click', (e) => {
+      e.preventDefault();
+      firebase.database().ref().child('/user-posts/' + userId + '/' + newPost).remove();
+      firebase.database().ref().child('posts/' + newPost).remove();
+      while (posts.firstChild) posts.removeChild(posts.firstChild);
+      // reload_page();
+    });
+  
+    btnUpdate.addEventListener('click', () => {
+      const newUpdate = document.getElementById(newPost);
+      const nuevoPost = {
+        body: newUpdate.value,
+      };
+      var updatesUser = {};
+      var updatesPost = {};
+      updatesUser['/user-posts/' + userId + '/' + newPost] = nuevoPost;
+      updatesPost['/posts/' + newPost] = nuevoPost;
+      firebase.database().ref().update(updatesUser);
+      firebase.database().ref().update(updatesPost);
+    });
   });
 
   btnUpdate.addEventListener('click', () => {
@@ -195,7 +200,7 @@ btnPost.addEventListener('click', () => {
 
 
 //Autentificación con Google
-btnLoginGoogle.addEventListener('click', () => {
+  $('#btn-login-google').click(()=> {
   let provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({
     'display': 'popup'
@@ -215,16 +220,16 @@ btnLoginGoogle.addEventListener('click', () => {
       // The email of the user's account used.
       // const email = error.email;
       // The firebase.auth.AuthCredential type that was used.
-      // const credential = error.credential;
-      // ...
-      //console.log(`Error ${error.message}`);
-      //console.log("no ha iniciado sesión")
+      const credential = error.credential;
+
     });
 });
 
 //Autentificación con Facebook
-btnLoginFacebook.addEventListener('click', () => {
-  let provider = new firebase.auth.FacebookAuthProvider();
+
+  $('#btn-login-facebook').click(()=> {
+  const provider = new firebase.auth.FacebookAuthProvider();
+
   provider.setCustomParameters({
     'display': 'popup'
   });
