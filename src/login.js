@@ -1,9 +1,6 @@
 //Declración de Variables:
-
 const inputMailRecord = document.getElementById('emailR');
 const inputPasswordRecord = document.getElementById('passwordR');
- const resgisterLink = document.getElementById('registerLink');
-const btnSignUp = document.getElementById('btn-signup');
 const inputMailAccess = document.getElementById('mail-access');
 const inputPasswordAccess = document.getElementById('password-access');
 const containerText = document.getElementById('container-text');
@@ -126,23 +123,25 @@ $('#return').click(() =>{
   signUp.style.display = 'none';
 })
 
+//Escribir en la base de datos
 const writeUserData = (userId, name, email, imageUrl) => {
-  firebase.database().ref('users/' + userId).set({
+  firebase.database().ref('users/' + userId)
+  .set({
     username: name,
     email: email,
     profile_picture: imageUrl
   });
 }
-const writeNewPost = (uid, body) => {
+const writeNewPost = (uid, message) => {
   // A post entry.
-  var postData = {
+  let postData = {
     uid: uid,
-    body: body,
+    message: message,
   };
   // Get a key for a new Post.
-  var newPostKey = firebase.database().ref().child('posts').push().key;
+  let newPostKey = firebase.database().ref().child('posts').push().key;
   // Write the new post's data simultaneously in the posts list and the user's post list.
-  var updates = {};
+  let updates = {};
   updates['/posts/' + newPostKey] = postData;
   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
   firebase.database().ref().update(updates);
@@ -153,13 +152,11 @@ $('#btn-post').click(()=> {
     var userId = firebase.auth().currentUser.uid;
     const newPost = writeNewPost(userId, post.value);
     posts.innerHTML += `
-
       <div>
           <textarea id="${newPost}">${post.value}</textarea>
           <button id ="update" type="button">Update</button>
           <button id="delete" type="button">Delete</button>
       </div>`
-
     const btnUpdate = document.getElementById('update');
     const btnDelete = document.getElementById('delete');
     btnDelete.addEventListener('click', (e) => {
@@ -173,7 +170,7 @@ $('#btn-post').click(()=> {
     btnUpdate.addEventListener('click', () => {
       const newUpdate = document.getElementById(newPost);
       const nuevoPost = {
-        body: newUpdate.value,
+        message: newUpdate.value,
       };
       var updatesUser = {};
       var updatesPost = {};
@@ -184,20 +181,6 @@ $('#btn-post').click(()=> {
     });
   });
 
-  btnUpdate.addEventListener('click', () => {
-    const newUpdate = document.getElementById(newPost);
-    const nuevoPost = {
-      body: newUpdate.value,
-    };
-    var updatesUser = {};
-    var updatesPost = {};
-    updatesUser['/user-posts/' + userId + '/' + newPost] = nuevoPost;
-    updatesPost['/posts/' + newPost] = nuevoPost;
-    firebase.database().ref().update(updatesUser);
-    firebase.database().ref().update(updatesPost);
-  });
-});
-
 
 //Autentificación con Google
   $('#btn-login-google').click(()=> {
@@ -207,8 +190,10 @@ $('#btn-post').click(()=> {
   });
   firebase.auth().signInWithPopup(provider)
     .then((result) => {
-      console.log('ghgyy');
+      console.log(result);
       userHtml.innerHTML = `${result.user.displayName}`;
+      $('#photo').text('');
+      $('#photo').append("<img src='"+result.user.photoURL+"' />");
       wall.style.display = 'block';
       sign.style.display = 'none';
     })
@@ -221,22 +206,21 @@ $('#btn-post').click(()=> {
       // const email = error.email;
       // The firebase.auth.AuthCredential type that was used.
       const credential = error.credential;
-
     });
 });
 
 //Autentificación con Facebook
-
   $('#btn-login-facebook').click(()=> {
   const provider = new firebase.auth.FacebookAuthProvider();
-
   provider.setCustomParameters({
     'display': 'popup'
   });
   firebase.auth().signInWithPopup(provider)
     .then((result) => {
-      console.log('ghgyy');
+      console.log(result);
       userHtml.innerHTML = `${result.user.displayName}`;
+      $('#photo').text('');
+      $('#photo').append("<img src='"+result.user.photoURL+"' />");
       wall.style.display = 'block';
       sign.style.display = 'none';
     })
