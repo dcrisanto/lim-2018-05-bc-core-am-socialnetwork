@@ -112,7 +112,7 @@
 
     <div id="logout">
 
-      <p id="user_name"></p>
+      <!--<p id="user_name"></p>-->
 
       <input type="button" id="sign-off" value="Cerrar sesión">
 
@@ -128,11 +128,16 @@
         <div class="tab_container">
           <div id="tab1" class="tab_content">
             <div class="col">
-              <div id="photo"></div>
+              <div class="photo_user_name">
+                <div id="photo"></div>
+                <div id="user_name"></div>
+              </div>
               <div class="post">
-                <h3>Post</h3>
+                <!--<h3>Post</h3>-->
                 <div id="container-post" class="hiden">
-                  <textarea name="Publicacòn" id="post" cols="30" rows="10"></textarea>
+                    <span class="uiIconText _5qtp">
+                      <i class="publicar"></i>Publicación</span>
+                  <textarea placeholder="¿Qué deseas publicar?" name="Publicacòn" id="post" cols="30" rows="10"></textarea>
                   <input type="button" value="Publicar" id="btn-post">
                 </div>
                 <div id="posts" class="hiden">
