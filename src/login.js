@@ -107,7 +107,6 @@ $('#btn-login').click(login = () => {
     clearContent([inputMailAccess, inputPasswordAccess]);
   });
 
-
 //Cerrar sesión
   $('#sign-off').click(()=> {
   firebase.auth().signOut()
