@@ -1,3 +1,8 @@
+/* 
+#btn-post{
+  width: 100px;
+}
+
 
 #sign-off{
   background-color: transparent;
@@ -22,7 +27,7 @@
   border-radius: 2px;
   box-sizing: border-box;
   height: 24px;
-  left: 500px;
+  left: 600px;
   position: absolute;
   top: 2px;
   width: 204px;
@@ -56,17 +61,6 @@
   width: 400px;
 }
 
-#signIn {
-  display: block;
-}
-
-#signUp {
-  display: none;
-}
-
-#wall {
-  display: none;
-}
 
 /* #backgroundImage {
   position: fixed;
@@ -82,7 +76,7 @@
   -o-filter: blur(3px);
   -ms-filter: blur(3px);
   filter: blur(3px);
-} */
+} 
 
 
 .input-field input[type=date]:focus+label,
@@ -101,7 +95,7 @@
 }
 
 
-/* add appropriate colors to fb, twitter and google buttons */
+/* add appropriate colors to fb, twitter and google buttons 
 
 .fb {
   background-color: #3B5998;
@@ -115,20 +109,21 @@
   padding: 1% 5%;
 }
 
-/* Two-column layout */
+/* Two-column layout 
 
 .col {
   float: left;
   width: 50%;
   margin: auto;
-  /* padding: 0 50px; */
-  /* margin-top: 6px; */
+  /* padding: 0 50px; 
+  /* margin-top: 6px; 
 }
 
-/* Clear floats after the columns */
+/* Clear floats after the columns 
 
 .row:after {
   content: "";
   display: table;
   clear: both;
 }
+ */

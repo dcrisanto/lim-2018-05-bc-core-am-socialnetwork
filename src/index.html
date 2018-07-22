@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Muro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans:400,800|Montserrat" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script> 
+</head>
+
+<body>
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+        <ul class="tabs teal">
+            <li class="tab col s3"><a class="white-text active" id="login">login</a></li>
+            <li class="tab col s3"><a class="white-text" id="register">register</a></li>
+          </ul>
+      <div id="modal_content" class="row">
+
+      </div>
+      <div class="modal-footer">
+          <a class="waves-effect waves-light btn indigo darken-3" id ="btn-login-facebook"><i class="material-icons left fa fa-facebook"></i>Facebook</a>
+          <a class="waves-effect waves-light btn red darken-3" id = "btn-login-google"><i class="material-icons left fa fa-google"></i>Google</a>
+        <a href="login.html" class=" modal-action modal-close waves-effect waves-green btn-flat">continuar sin loguearme</a>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+    <script src='modal.js'></script>
+    <script src='all.js'></script>
+  
+</html>
