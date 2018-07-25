@@ -17,9 +17,11 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-dark bg-primary">
+    <span class="navbar-brand mb-0 h1">Vitality</span>
+  </nav>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -58,7 +60,7 @@
 
 
       <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#modalLogin">Ingresar</a>
-      <a class="btn btn-outline-secondary" href="#" data-toggle="modal" data-target="#modalLogin">Registrar</a>
+      <a class="btn btn-outline-secondary" href="#" data-toggle="modal" data-target="#modalLogin ">Registrar</a>
 
     </div>
   </nav>
@@ -85,26 +87,26 @@
 
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <form id="form-login">
-                  <div class="form-group">
-                      <label for="exampleInputEmail1">Email</label>
-                      <input class='validate' type='email' name='email' id='mail-access' />
-                  </div>
-                  
-                  <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
-                      <input class='validate' type='password' name='password' id='password-access' />
-                  </div>
-
-                  <div class="form-group">
-                <a href="#" class="fb" id="btn-login-facebook">
-                  <i class="fa fa-facebook fa-fw"></i> Facebook
-                </a>
-              </div>
                 <div class="form-group">
-                <a href="#" class="google" id="btn-login-google">
-                  <i class="fa fa-google fa-fw"></i> Google+
-                </a>
-              </div>
+                  <label for="exampleInputEmail1">Email</label>
+                  <input class='validate form-control' type='email' name='email' id='mail-access' />
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input class='validate form-control' type='password' name='password' id='password-access' />
+                </div>
+
+                <div class="form-group">
+                  <a href="#" class="fb" id="btn-login-facebook">
+                    <i class="fa fa-facebook fa-fw"></i> Facebook
+                  </a>
+                </div>
+                <div class="form-group">
+                  <a href="#" class="google" id="btn-login-google">
+                    <i class="fa fa-google fa-fw"></i> Google+
+                  </a>
+                </div>
                 <input type="submit" id="btn-login" class="btn" value="LOGIN">
 
 
@@ -116,9 +118,15 @@
 
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <form id="form-signup">
-                <input id="emailR" type="email" name="username" placeholder="email" required>
-                <input id="passwordR" type="password" name="password" placeholder="password" required pattern=".{8,}">
-                <input id="confirm-password" type="password" name="confirm-password" placeholder="confirm password" required />
+                <div class="form-group">
+                  <input id="emailR" class='form-control' type="email" name="username" placeholder="email" required>
+                </div>
+                <div class="form-group">
+                  <input id="passwordR" class='form-control' type="password" name="password" placeholder="password" required pattern=".{8,}">
+                </div>
+                <div class="form-group">
+                  <input id="confirm-password" class='form-control' type="password" name="confirm-password" placeholder="confirm password" required />
+                </div>
                 <p id="password-requirements">Requisitos mínimos de Contraseña:</p>
                 <ul>
                   <li id="mayus">Mínimo 1 mayúscula</li>
