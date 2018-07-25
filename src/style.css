@@ -1,3 +1,6 @@
+.check{
+  background-color: green;
+}
 #publicar{
   background-image: url(https://previews.123rf.com/images/coffeemate/coffeemate1301/coffeemate130100056/17438663-pencil-cartoon-a-children-s-sketch.jpg);
     background-size: auto;
@@ -61,31 +64,7 @@ textarea {
     white-space: nowrap;
 }
 
-#sign-off{
-  background-color: transparent;
-  color: inherit;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
-  height: 27px;
-  line-height: 28px;
-  padding: 0 10px 1px;
-  position: relative;
-  text-decoration: none;
-  vertical-align: top;
-  white-space: nowrap;
-  position: relative;
-  padding: 0 12px 1px;
-  color: #365899;
-  cursor: pointer;
-  text-decoration: none;
-  border-radius: 2px;
-  box-sizing: border-box;
-  left: 200px;
-  position: absolute;
-  top: 3px;
-  width: 200px;
-}
+
 
 #post{
   background-color: transparent;
@@ -103,16 +82,9 @@ textarea {
   /* width: 100%; */
 }
 
-#signIn {
-  display: block;
-}
-
-#signUp {
-  display: none;
-}
-
-#wall {
-  display: none;
+ul{
+  list-style: none;
+  padding: 0%;
 }
 
 /* #backgroundImage {
@@ -129,72 +101,9 @@ textarea {
   -o-filter: blur(3px);
   -ms-filter: blur(3px);
   filter: blur(3px);
-} */
+} 
+*/
 
-
-.input-field input[type=date]:focus+label,
-.input-field input[type=text]:focus+label,
-.input-field input[type=email]:focus+label,
-.input-field input[type=password]:focus+label {
-  color: #e91e63;
-}
-
-.input-field input[type=date]:focus,
-.input-field input[type=text]:focus,
-.input-field input[type=email]:focus,
-.input-field input[type=password]:focus {
-  border-bottom: 2px solid #e91e63;
-  box-shadow: none;
-}
-/* style the container */
-/* 
-.container {
-  position: absolute;
-  z-index: 999;
-  border-radius: 3px;
-  background-color:#73837d;
-  margin : 3%;
-  font-family: 'Montserrat';
-} */
-
-#wall {
-  z-index: 999;
-  position: absolute;
-}
-
-h1,
-p {
-
-  font-size: 12px;
-  color: #f1f1f1;
-}
-
-h1 {
-  font-size: 28px;
-}
-
-/* style inputs and link buttons */
-
-input {
-  width: 60%;
-  /* padding: 12px; */
-  border: none;
-  border-radius: 4px;
-  margin: 2%;
-  opacity: 0.85;
-  display: inline-block;
-  font-size: 17px;
-  line-height: 20px;
-  text-decoration: none;
-  /* remove underline from anchors */
-}
-
-input:hover,
-.btn:hover {
-  opacity: 1;
-}
-
-/* add appropriate colors to fb, twitter and google buttons */
 
 .fb {
   background-color: #3B5998;
@@ -208,37 +117,26 @@ input:hover,
   padding: 1% 5%;
 }
 
-/* Two-column layout */
 
-.col {
-  float: left;
-  width: 50%;
-  margin: auto;
-  /* padding: 0 50px; */
-  /* margin-top: 6px; */
+/* html {
+  font-size: 62.5%;
 }
 
-/* Clear floats after the columns */
+body {
+  font-size: 1.6rem;
+  font-family: "PT Sans", sans-serif;
+  color: #505260;
+  background-color: white;
+}
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+a {
+  color: #2f889a;
+  text-decoration: none;
 }
 
 
-/* Responsive layout - when the screen is less than 650px wide, make the two columns stack on top of each other instead of next to each other */
 
-@media screen and (max-width: 650px) {
-  #background-image {
-    width: 100%;
-    height: 100%;
-  }
-  .container {
-    margin-top: 25%;
-  }
-  .col {
-    width: 100%;
-    margin-top: 0;
-  }
-}
+input, textarea {
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.6rem;
+} */
