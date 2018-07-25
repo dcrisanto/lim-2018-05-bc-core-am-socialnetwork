@@ -1,0 +1,142 @@
+.check{
+  background-color: green;
+}
+#publicar{
+  background-image: url(https://previews.123rf.com/images/coffeemate/coffeemate1301/coffeemate130100056/17438663-pencil-cartoon-a-children-s-sketch.jpg);
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    left: 0;
+    position: absolute;
+    top: -1px;
+    vertical-align: middle;
+}
+textarea {
+  max-width: 100%;
+}
+
+#container-post{
+  padding-top: 50px;
+}
+
+#btn-post{
+  width: 100px;
+}
+.photo_user_name{
+  display: block;
+  
+}
+#photo{
+  border-radius: 50%;
+  /* overflow: hidden; */
+  bottom: 0;
+  left: 0;
+  /* margin: auto; */
+  max-height: 20px;
+  max-width: 20px;
+  /* position: absolute; */
+  right: 0;
+  top: 0;
+  padding-top: 20px;
+  margin: 0;
+}
+
+#user_name{
+    /* display: block; */
+    /* margin-left: 10px; */
+    max-width: 100px;
+    /* padding-left: 15px; */
+    /* padding-top: 40px; */
+    /* text-overflow: ellipsis; */
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    position: relative;
+    bottom: 1;
+    right: 1;
+    display: block;
+    margin-left: 30px;
+    max-width: 126px;
+    overflow: hidden;
+    padding-left: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
+#post{
+  background-color: transparent;
+  /* border: 0; */
+  box-sizing: border-box;
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 50px;
+  line-height: 18px;
+  min-height: 69px;
+  /* outline: 0; */
+  padding: 23px 12px 14px;
+  /* resize: none; */
+  /* width: 100%; */
+}
+
+ul{
+  list-style: none;
+  padding: 0%;
+}
+
+/* #backgroundImage {
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 1;
+  display: block;
+  background-image: url('uno.jpg');
+  width: 100%;
+  height: 100%;
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+} 
+*/
+
+
+.fb {
+  background-color: #3B5998;
+  color: white;
+  padding: 1% 5%;
+}
+
+.google {
+  background-color: #dd4b39;
+  color: white;
+  padding: 1% 5%;
+}
+
+
+/* html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "PT Sans", sans-serif;
+  color: #505260;
+  background-color: white;
+}
+
+a {
+  color: #2f889a;
+  text-decoration: none;
+}
+
+
+
+input, textarea {
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.6rem;
+} */
