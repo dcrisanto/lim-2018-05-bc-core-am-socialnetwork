@@ -67,10 +67,10 @@ $("#passwordR").on('keyup', () => {
   for (let i = 0; i < 5; i++) {
     if (regExp[i].test(registrationPassword)) {
 
-elements[i].attr("class","icon-checkmark");
+      elements[i].attr("class", "icon-checkmark");
 
     } else {
-      elements[i].attr("class","icon-cross");
+      elements[i].attr("class", "icon-cross");
     }
   }
 
@@ -210,8 +210,11 @@ $('#sign-off').click(() => {
   console.log(user);
   firebase.auth().signOut()
     .then(() => {
-      getID('wall').style.display = 'none';
-      sign.style.display = 'block';
+      console.log("sesión cerrada");
+      getID('user_name').innerHTML = '';
+      getID('photo').innerHTML = '';
+      /*       getID('wall').style.display = 'none';
+            sign.style.display = 'block'; */
     })
     .catch((error) => {})
 });
@@ -270,9 +273,9 @@ $('#btn-post').click(() => {
   posts.innerHTML += `
  <div>
  <textarea id="${newPost}">${post.value}</textarea>
- <button id ="update" type="button">Update</button>
- <button id="delete" type="button">Delete</button>
+ <div id="${posts}">$('.dropdown-toggle').dropdown('toggle')</div>
  </div>`
+
   const btnUpdate = document.getElementById('update');
   const btnDelete = document.getElementById('delete');
   btnDelete.addEventListener('click', (e) => {
@@ -310,8 +313,8 @@ $('#btn-login-google').click(() => {
       getID('user_name').innerHTML = `${result.user.displayName}`;
       $('#photo').text('');
       $('#photo').append("<img src='" + result.user.photoURL + "' />");
-      getID('wall').style.display = 'block';
-      sign.style.display = 'none';
+      /*       getID('wall').style.display = 'block';
+            sign.style.display = 'none'; */
     })
     .catch((error) => {
       console.log('yyyyyyyyyyyyyyy');
